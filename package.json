@@ -1,0 +1,27 @@
+{
+  "name": "spm_backend",
+  "version": "1.0.0",
+  "description": "project for spm back end",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vikumsri/spm_backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vikumsri/spm_backend/issues"
+  },
+  "homepage": "https://github.com/vikumsri/spm_backend#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.2"
+  }
+}
