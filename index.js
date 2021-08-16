@@ -10,8 +10,10 @@ app.use(bodyParser.json())
 
 
 mongo.connect(
-    "mongodb+srv://root:root@cluster0.pikdq.mongodb.net/icafDB?retryWrites=true&w=majority",
-    { useNewUrlParser: true }
+    // "mongodb+srv://root:root@cluster0.pikdq.mongodb.net/icafDB?retryWrites=true&w=majority",
+    "mongodb+srv://spmDb:root@cluster0.e1a78.mongodb.net/spmDB?retryWrites=true&w=majority",
+    { useNewUrlParser: true },
+    { useUnifiedTopology: true}
 );
 
 mongo.connection.once("open", function () {
