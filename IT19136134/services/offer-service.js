@@ -16,7 +16,7 @@ const createOffer = async (req, res) => {
 
 const getOffer = async (req, res) => {
   await Offer.find({})
-    .populate("catergories", "catergoryName")
+    .populate("categories", "categoryName")
     .populate("meals", "mealName")
     .then((data) => {
       res.status(200).send({ data: data });

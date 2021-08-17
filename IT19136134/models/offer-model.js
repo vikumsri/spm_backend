@@ -5,7 +5,7 @@ const OfferSchema = new mongoose.Schema({
   catergories: {
     type: mongoose.Schema.Types.ObjectId,
     required: false,
-    ref: "catergories",
+    ref: "categories",
   },
 
   meals: {
