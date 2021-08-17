@@ -4,7 +4,8 @@ const bodyParser = require("body-parser");
 const mongo = require("mongoose");
 const cors = require("cors");
 const port = 5000
-
+const categoryController = require('./IT19167992/controllers/category-controller')
+const mealController = require('./IT19167992/controllers/meals-controller')
 app.use(cors());
 app.use(bodyParser.json())
 
@@ -24,6 +25,7 @@ app.route("/").get((req, res) => {
     res.send("SPM Backend");
 });
 
-
+app.use('/category',categoryController());
+app.use('/meal', mealController());
 app.listen(port, () =>
     console.log("Node server is running.."))
