@@ -3,7 +3,9 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongo = require("mongoose");
 const cors = require("cors");
-const port = 5000
+const port = 5000;
+
+const todaysSpecialAPI = require('./IT19135830/controllers/todays-special-controller')
 
 app.use(cors());
 app.use(bodyParser.json())
@@ -23,6 +25,8 @@ mongo.connection.once("open", function () {
 app.route("/").get((req, res) => {
     res.send("SPM Backend");
 });
+
+app.use("/user", todaysSpecialAPI())
 
 
 app.listen(port, () =>
