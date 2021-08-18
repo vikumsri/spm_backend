@@ -6,7 +6,7 @@ const cors = require("cors");
 const port = 5000
 
 app.use(cors());
-app.use(bodyParser.json())
+app.use(bodyParser.json({ limit: "50mb" }))
 
 
 mongo.connect(
