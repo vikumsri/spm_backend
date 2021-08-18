@@ -9,5 +9,6 @@ module.exports = function () {
   router.get("/getMealForOffer/:id", controller.getMealForOffer);
   router.get("/getCatergoryForOffer/:id", controller.getCatergoryForOffer);
   router.get("/getOfferById/:id", controller.getOfferById);
+  router.delete("/deleteoffer/:id", controller.deleteOffer);
   return router;
 };
