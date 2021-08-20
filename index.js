@@ -7,7 +7,7 @@ const port = 5000
 const categoryController = require('./IT19167992/controllers/category-controller')
 const mealController = require('./IT19167992/controllers/meals-controller')
 app.use(cors());
-app.use(bodyParser.json())
+app.use(bodyParser.json({ limit: "50mb" }))
 
 
 mongo.connect(

@@ -38,10 +38,23 @@ const getFoodForCategory = async (req, res) => {
     }
 }
 
+const getCategoryById = async (req,res) => {
+    if(req.params && req.params.id){
+        await Category.findById(req.params.id)
+        .populate('categories', 'categoryName')
+        .then(data => {
+            res.status(200).send({ categories: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+    }   
+}
+
 const updateCategory = async ( req, res) =>{   
     await Category.findByIdAndUpdate(
-      req.body.id,
-      { $set: { categoryName: req.body.categoryName } },
+      req.params.id,
+      { $set: { categoryName: req.body.categoryName, image :req.body.image} },
       { upsert: true },
       function (err, result) {
         if (err) {
@@ -55,7 +68,7 @@ const updateCategory = async ( req, res) =>{
 const deleteCategory = async (req, res) => {
 
     //check if the req body is empty
-        const id = req.body.id
+        const id = req.params.id
         console.log(id)
         
         //delete product data to database
@@ -75,6 +88,7 @@ const deleteCategory = async (req, res) => {
 module.exports = {
     createCategory,
     getAllCategories,
+    getCategoryById,
     getFoodForCategory,
     updateCategory,
     deleteCategory

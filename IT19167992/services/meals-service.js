@@ -24,10 +24,36 @@ const getAllMeals = async (req,res) => {
 
 }
 
+const getMealById = async (req,res) => {
+    if(req.params && req.params.id){
+        await Meal.findById(req.params.id)
+        .populate('meals', 'mealName price description')
+        .then(data => {
+            res.status(200).send({ meals: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+    }   
+}
+
+const getCategoryForMeal = async (req, res) => {
+    if (req.params && req.params.id) {
+        await Meal.findById(req.params.id)
+          .populate("catergories", "categoryName")
+          .then((data) => {
+            res.status(200).send({ catergories: data.catergories });
+          })
+          .catch((error) => {
+            res.status(500).send({ error: error.message });
+          });
+      }
+}
+
 const updateMeal = async ( req, res) =>{   
     await Meal.findByIdAndUpdate(
-      req.body.id,
-      { $set: { mealName: req.body.mealName, price: req.body.price, description:req.body.description } },
+      req.params.id,
+      { $set: { mealName: req.body.mealName, price: req.body.price, description:req.body.description, image :req.body.image } },
       { upsert: true },
       function (err, result) {
         if (err) {
@@ -41,7 +67,7 @@ const updateMeal = async ( req, res) =>{
 const deleteMeal = async (req, res) => {
 
     //check if the req body is empty
-        const id = req.body.id
+        const id = req.params.id
         console.log(id)
         
         //delete product data to database
@@ -62,7 +88,9 @@ const deleteMeal = async (req, res) => {
 module.exports = {
     createMeal,
     getAllMeals,
+    getMealById,
     updateMeal,
-    deleteMeal
+    deleteMeal,
+    getCategoryForMeal
  
 }
