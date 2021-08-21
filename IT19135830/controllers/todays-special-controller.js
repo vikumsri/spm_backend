@@ -8,6 +8,8 @@ module.exports =function(){
     router.get('/views-today-specials', todaysSpecial.viewTodaysSpecial);
     router.get('/get-todays-special-dishes/:date',todaysSpecial.viewTodaysSpecialByDate);
     router.delete('/delete-todays-special/:id', todaysSpecial.deleteTodaysSpecial);
+    router.get('/view-individual-todays-special/:id', todaysSpecial.viewTodaysSpecialById);
+
 
     return router;
 }

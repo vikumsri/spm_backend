@@ -58,6 +58,21 @@ const editTodaysSpecial = async (req,res) => {
         }
     }
 
+    const viewTodaysSpecialById = async(req, res) => {
+
+            const id = req.params.id;
+            console.log("id", id);
+
+            await todaysSpecial.findById(req.params.id)
+            .then( data => {
+                res.status(200).send({data:data});
+            })
+            .catch(error => {
+                res.status(500).send({error:error.message});
+            })
+        
+    }
+
     const deleteTodaysSpecial =  async(req, res) => {
         if(req.params && req.params.id){
             const id = req.params.id;
@@ -79,5 +94,6 @@ module.exports = {
     viewTodaysSpecial,
     viewTodaysSpecialByDate,
     deleteTodaysSpecial,
+    viewTodaysSpecialById
     
 }

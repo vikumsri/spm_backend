@@ -8,7 +8,7 @@ const port = 5000;
 const todaysSpecialAPI = require('./IT19135830/controllers/todays-special-controller')
 
 app.use(cors());
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: "50mb"}))
 
 
 mongo.connect(
