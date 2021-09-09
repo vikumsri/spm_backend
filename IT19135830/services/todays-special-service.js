@@ -61,7 +61,6 @@ const editTodaysSpecial = async (req,res) => {
     const viewTodaysSpecialById = async(req, res) => {
 
             const id = req.params.id;
-            console.log("id", id);
 
             await todaysSpecial.findById(req.params.id)
             .then( data => {

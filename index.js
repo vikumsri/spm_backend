@@ -6,6 +6,7 @@ const cors = require("cors");
 const port = 5000;
 
 const todaysSpecialAPI = require('./IT19135830/controllers/todays-special-controller')
+const emailAPI = require('./IT19135830/controllers/email-creator-controller');
 
 app.use(cors());
 app.use(bodyParser.json({limit: "50mb"}))
@@ -26,7 +27,8 @@ app.route("/").get((req, res) => {
     res.send("SPM Backend");
 });
 
-app.use("/user", todaysSpecialAPI())
+app.use("/user", todaysSpecialAPI());
+app.use("/email", emailAPI());
 
 
 app.listen(port, () =>
