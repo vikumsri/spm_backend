@@ -4,7 +4,10 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongo = require("mongoose");
 const cors = require("cors");
- 
+
+
+const todaysSpecialAPI = require('./IT19135830/controllers/todays-special-controller')
+const emailAPI = require('./IT19135830/controllers/email-creator-controller');
  
 const categoryController = require('./IT19167992/controllers/category-controller')
 const mealController = require('./IT19167992/controllers/meals-controller')
@@ -38,6 +41,9 @@ mongo.connection.once("open", function () {
 app.route("/").get((req, res) => {
   res.send("SPM Backend");
 });
+
+app.use("/user", todaysSpecialAPI());
+app.use("/email", emailAPI());
 
  
 
