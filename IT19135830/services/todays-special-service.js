@@ -1,4 +1,7 @@
+const moment =require("moment");
+
 const todaysSpecial = require("../models/todays-special-model");
+
 
 const createTodaysSpecial = async(req,res, next) => {
     if(req.body){
@@ -86,6 +89,43 @@ const editTodaysSpecial = async (req,res) => {
         }
     }
 
+    const specialsReport = async (req,res) => {
+        if(req.params){
+            await todaysSpecial.find()
+                .then(data => {
+
+                    let dates = [];
+                    let dishes = [];
+                    
+                    let startOfWeek = moment().startOf('week').toDate();
+                    let endOfWeek   = moment().endOf('week').toDate();
+
+                    for (let i =0; i < data.length; i++){
+                        dates.push(data[i].date);
+
+                        let dateString = data[i].date; // Oct 23
+
+                        var dateObject = new Date(dateString);
+
+
+                        if(startOfWeek <= dateObject && endOfWeek >= dateObject){
+                            dishes.push(data[i]);
+                            
+                        }                        
+                        
+                    }
+
+                    res.status(200).send({data:dishes});
+
+
+
+                })
+                .catch(error => {
+                    res.status(500).send({error: error.message});
+                });
+        }
+    }
+
 
 module.exports = {
     createTodaysSpecial,
@@ -93,6 +133,7 @@ module.exports = {
     viewTodaysSpecial,
     viewTodaysSpecialByDate,
     deleteTodaysSpecial,
-    viewTodaysSpecialById
+    viewTodaysSpecialById,
+    specialsReport
     
 }

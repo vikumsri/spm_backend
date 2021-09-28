@@ -6,7 +6,6 @@ const createEmail = async(req,res, next) => {
 
      let subEmails = [];
         subEmails= await subscribers();
-    console.log(subEmails);
 
     if(req.body){
 
