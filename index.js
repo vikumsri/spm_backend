@@ -8,6 +8,7 @@ const port = 5000;
 const offerAPI = require("./IT19136134/controllers/offer-controller");
 const categoryController = require("./IT19167992/controllers/category-controller");
 const mealController = require("./IT19167992/controllers/meals-controller");
+const counterService = require("./IT19136134/controllers/counter-controller");
 
 app.use(cors());
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -30,5 +31,6 @@ app.route("/").get((req, res) => {
 app.use("/category", categoryController());
 app.use("/meal", mealController());
 app.use("/offer", offerAPI());
+app.use("/counter", counterService());
 
 app.listen(port, () => console.log("Node server is running.."));
