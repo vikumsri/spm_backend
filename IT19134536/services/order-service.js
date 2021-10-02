@@ -1,6 +1,6 @@
 const OrderModel = require('../models/order-model')
 const { ORDER_ACCEPT } = require('../constants')
-const { log } = require('../../logger');
+ 
 /**
  * This api returns the a list of all the orders
  * @param none
@@ -8,17 +8,17 @@ const { log } = require('../../logger');
  */
 const getAllOrders = async (req, res) => {
 
-    log('Featching all order details')
+    console.log('Featching all order details')
     //Retrive data from backend
     await OrderModel.find()
         .then((data) => {
-            log('Featching orders succsessfull!')
-            log('Sending response..')
+            console.log('Featching orders succsessfull!')
+            console.log('Sending response..')
             res.status(200).send({ data: data });
         })
         .catch((error) => {
-            log('Featching failed..')
-            log(`Error:${error.message}`)
+            console.log('Featching failed..')
+            console.log(`Error:${error.message}`)
             res.status(500).send({ error: error.message });
         });
 }
@@ -26,24 +26,25 @@ const getAllOrders = async (req, res) => {
 /**
  * This api returns the a list of all the orders
  * @param id
+ * 
  * @returns List of OrderModels
  */
 const getOrderById = async (req, res) => {
     const id = req.params.id
 
-    log(`Featching order details of order:${id}`)
+    console.log(`Featching order details of order:${id}`)
 
     //Retrive data from backend
     await OrderModel.find({ "orderId": id })
         .then((data) => {
-            log('Featching order succsessfull!')
-            log('Sending response..')
+            console.log('Featching order succsessfull!')
+            console.log('Sending response..')
             res.status(200).send({ data: data });
         })
         .catch((error) => {
-            log('Featching failed..')
-            log(`Error:${error.message}`)
-            res.status(500).send({ error: error.message });
+            console.log('Featching failed..')
+            console.log(`Error:${error.message}`)
+            console.res.status(500).send({ error: error.message });
         });
 }
 
@@ -53,24 +54,24 @@ const getOrderById = async (req, res) => {
  * @returns json 
  */
 const createOrder = async (req, res) => {
-    log('Request recived to create order')
+    console.log('Request recived to create order')
     if (req.body) {
         const orderModel = new OrderModel(req.body);
         await orderModel
             .save()
             .then((data) => {
-                log('Order details Inserted Successfully')
+                console.log('Order details Inserted Successfully')
                 res.json({
                     message: "Inserted Successfully",
                     data: data,
                 });
             })
             .catch((error) => {
-                log(`Error:${error.message}`)
+                console.log(`Error:${error.message}`)
                 res.status(500).send({ error: error.message });
             });
     } else {
-        log('Request failed due to empty request body')
+        console.log('Request failed due to empty request body')
     }
 };
 
@@ -80,9 +81,9 @@ const createOrder = async (req, res) => {
  * @returns json 
  */
 const updateOrderStatus = async (req, res) => {
-    log(`Request recived to update order status`)
+    console.log(`Request recived to update order status`)
     if (req.body) {
-        log(`updating order status of order:${req.body.id}`)
+        console.log(`updating order status of order:${req.body.id}`)
         await OrderModel.findByIdAndUpdate(
             req.body.id,
             { $set: { status: ORDER_ACCEPT } },
@@ -90,25 +91,117 @@ const updateOrderStatus = async (req, res) => {
             function (err, result) {
                 if (err) {
 
-                    log(`Error:${err.message}`)
+                    console.log(`Error:${err.message}`)
                     res.send(result);
                 } else {
-                    log('Order status Updated Successfully')
+                    console.log('Order status Updated Successfully')
                     res.send(result);
                 }
             }
         );
     } else {
-        log('Request failed due to empty request body')
+        console.log('Request failed due to empty request body')
     }
 };
+
+// const updateOrderStatus = async (req, res) => {
+//     log(`Request recived to update order status`)
+//     if (req.body) {
+//         log(`updating order status of order:${req.body.id}`)
+//         await OrderModel.findByIdAndUpdate(
+//             req.body.id,
+//             { $set: { status: ORDER_ACCEPT } },
+//             { upsert: true },
+//             function (err, result) {
+//                 if (err) {
+
+//                     log(`Error:${err.message}`)
+//                     res.send(result);
+//                 } else {
+//                     log('Order status Updated Successfully')
+//                     res.send(result);
+//                 }
+//             }
+//         );
+//     } else {
+//         log('Request failed due to empty request body')
+//     }
+// };
+
+const updateDeliveryOrderStatus = async (req, res) => {
+    // console.log(`Request recived to update order status`)
+    // if (req.body) {
+    //     console.log(`updating order status of order:${req.body.id}`)
+    //     await OrderModel.findByIdAndUpdate(
+    //         req.body.id,
+            
+    //         { $set: { status: DELEVERE_ACCEPT } },
+    //         { upsert: true },
+    //         function (err, result) {
+    //             if (err) {
+
+    //                 console.log(`Error:${err.message}`)
+    //                 res.send(result);
+    //             } else {
+    //                 console.log('Order Delivery status Updated Successfully')
+    //                 res.send(result);
+    //             }
+    //         }
+    //     );
+    // } else {
+    //     console.log('Request failed due to empty request body')
+    // }
+    console.log(`Request recived to update order status`)
+    if (req.body) {
+        console.log(`updating order status of order:${req.params.key}`)
+        const keyword = req.params.key
+        var myquery = { status: "ON DELEVERY", nicNumber : keyword  };
+        var newvalues = { $set: {status: "DELEVERED"} };
+        await OrderModel.updateOne(
+            myquery, newvalues,
+            function (err, result) {
+                if (err) {
+
+                    console.log(`Error:${err.message}`)
+                    res.send(result);
+                } else {
+                    console.log('Order Delivery status Updated Successfully')
+                    res.send(result);
+                }
+            }
+        );
+    } else {
+        console.log('Request failed due to empty request body')
+    }
+
+ 
+ 
+       
+    
+};
+
+const searchOrders = async(req, res) => {
+    if(req.params && req.params.key){
+        const keyword = req.params.key
+        const regex = new RegExp(keyword, 'i') // i for case insensitive
+        await OrderModel.find({"nicNumber": {$regex: regex}})
+        .then(data => {
+            res.status(200).send({ data:data});
+        })
+        .catch(error => {
+            res.status(500).send({error: error.message});
+        });
+    }
+}
 
 module.exports = {
 
     getAllOrders,
     getOrderById,
     createOrder,
-    updateOrderStatus
+    updateOrderStatus,
+    updateDeliveryOrderStatus,
+    searchOrders
 
 }
 

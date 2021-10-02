@@ -10,6 +10,7 @@ const todaysSpecialAPI = require('./IT19135830/controllers/todays-special-contro
 const emailAPI = require('./IT19135830/controllers/email-creator-controller');
 const offerAPI = require("./IT19136134/controllers/offer-controller");
 const categoryController = require("./IT19167992/controllers/category-controller");
+const deliveryServiceController = require('./IT19134536/controller/deliveryService-controller')
 const mealController = require("./IT19167992/controllers/meals-controller");
 const port = process.env.BASE_FE_PORT
 const { log } = require('./logger');
@@ -41,6 +42,7 @@ app.use("/email", emailAPI());
 app.use("/category", categoryController());
 app.use("/meal", mealController());
 app.use("/offer", offerAPI());
+app.use('/delivery-service',deliveryServiceController());
 
 app.listen(port, () =>
     log("Node server started running.."))

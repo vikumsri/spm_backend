@@ -1,6 +1,6 @@
 const FeedbackModel = require('../models/feedback-model')
 const { ORDER_ACCEPT } = require('../constants')
-const { log } = require('../../logger');
+// const { log } = require('../../logger');
 
 /**
  * This api returns the a list of all the feedbacks
@@ -9,17 +9,17 @@ const { log } = require('../../logger');
  */
 const getAllFeedbacks = async (req, res) => {
 
-    log('Featching all Feedback details')
+    console.log('Featching all Feedback details')
     //Retrive data from backend
     await FeedbackModel.find()
         .then((data) => {
-            log('Featching Feedback succsessfull!')
-            log('Sending response..')
+            console.log('Featching Feedback succsessfull!')
+            console.log('Sending response..')
             res.status(200).send({ data: data });
         })
         .catch((error) => {
-            log('Featching failed..')
-            log(`Error:${error.message}`)
+            console.log('Featching failed..')
+            console.log(`Error:${error.message}`)
             res.status(500).send({ error: error.message });
         });
 }
@@ -31,24 +31,24 @@ const getAllFeedbacks = async (req, res) => {
  * @returns json 
  */
 const createFeedback = async (req, res) => {
-    log('Request recived to create Feedback')
+    console.log('Request recived to create Feedback')
     if (req.body) {
         const feedbackModel = new FeedbackModel(req.body);
         await feedbackModel
             .save()
             .then((data) => {
-                log('Feedback details Inserted Successfully')
+                console.log('Feedback details Inserted Successfully')
                 res.json({
                     message: "Inserted Successfully",
                     data: data,
                 });
             })
             .catch((error) => {
-                log(`Error:${error.message}`)
+                console.log(`Error:${error.message}`)
                 res.status(500).send({ error: error.message });
             });
     } else {
-        log('Request failed due to empty request body')
+        console.log('Request failed due to empty request body')
     }
 };
 
