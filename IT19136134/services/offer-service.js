@@ -1,4 +1,5 @@
 const Offer = require("../models/offer-model");
+const moment = require("moment");
 
 const createOffer = async (req, res) => {
   if (req.body) {
@@ -108,6 +109,55 @@ const getCatergoryForOffer = async (req, res) => {
   }
 };
 
+const searchOffer = async (req, res) => {
+  if (req.params && req.params.key) {
+    const keyword = req.params.key;
+    const regex = new RegExp(keyword, "i"); // i for case insensitive
+    await Offer.find({ offerName: { $regex: regex } })
+      .then((data) => {
+        res.status(200).send({ data: data });
+      })
+      .catch((error) => {
+        res.status(500).send({ error: error.message });
+      });
+  }
+};
+
+const getOfferWeekly = async (req, res) => {
+  if (req.params) {
+    await Offer.find()
+      .then((data) => {
+        let dates = [];
+        let offers = [];
+
+        let startOfWeek = moment().startOf("week").toDate();
+        let endOfWeek = moment().endOf("week").toDate();
+
+        console.log(startOfWeek);
+        console.log(endOfWeek);
+
+        for (let i = 0; i < data.length; i++) {
+          dates.push(data[i].startDate);
+
+          let dateString = data[i].startDate; // Oct 23
+
+          var dateObject = new Date(dateString);
+          console.log(dateObject);
+
+          if (startOfWeek <= dateObject) {
+            offers.push(data[i]);
+            console.log(dateObject);
+          }
+        }
+
+        res.status(200).send({ data: offers });
+      })
+      .catch((error) => {
+        res.status(500).send({ error: error.message });
+      });
+  }
+};
+
 module.exports = {
   createOffer,
   getOffer,
@@ -117,4 +167,6 @@ module.exports = {
   getCatergoryForOffer,
   getOfferById,
   deleteOffer,
+  searchOffer,
+  getOfferWeekly,
 };

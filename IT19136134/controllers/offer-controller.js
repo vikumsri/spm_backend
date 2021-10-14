@@ -10,5 +10,7 @@ module.exports = function () {
   router.get("/getCatergoryForOffer/:id", controller.getCatergoryForOffer);
   router.get("/getOfferById/:id", controller.getOfferById);
   router.delete("/deleteoffer/:id", controller.deleteOffer);
+  router.get("/searchOffer/:key", controller.searchOffer);
+  router.get("/weeklyOffer", controller.getOfferWeekly);
   return router;
 };
