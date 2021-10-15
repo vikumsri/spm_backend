@@ -2,6 +2,7 @@ const express= require('express');
 const router = express.Router();
 const todaysSpecial = require("../services/todays-special-service");
 
+
 module.exports =function(){
     router.post('/add-todays-special', todaysSpecial.createTodaysSpecial);
     router.patch('/edit-todays-special/:id', todaysSpecial.editTodaysSpecial);
@@ -9,6 +10,7 @@ module.exports =function(){
     router.get('/get-todays-special-dishes/:date',todaysSpecial.viewTodaysSpecialByDate);
     router.delete('/delete-todays-special/:id', todaysSpecial.deleteTodaysSpecial);
     router.get('/view-individual-todays-special/:id', todaysSpecial.viewTodaysSpecialById);
+    router.get('/specials-report', todaysSpecial.specialsReport);
 
 
     return router;
